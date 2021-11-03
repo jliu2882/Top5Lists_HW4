@@ -95,6 +95,9 @@ loginUser = async (req, res) => {
                     errorMessage: "An account with this email address does not exists."
                 })
         }
+
+        //TODO CHECK THE PASSWORD BEFORE ACCEPTING THEM LMFAO
+
         // LOGIN THE USER
         const token = auth.signToken(existingUser);
 
@@ -121,3 +124,4 @@ module.exports = {
     registerUser,
     loginUser
 }
+//TODO make a logout
