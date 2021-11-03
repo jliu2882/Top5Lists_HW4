@@ -13,6 +13,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { useContext } from 'react';
+import AuthContext from '../auth'
+import { GlobalStoreContext } from '../store'
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,14 +33,22 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
+  const { auth } = useContext(AuthContext);
+  const { store } = useContext(GlobalStoreContext)
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
+    //TODO login
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+    auth.loginUser({
+      email: data.get('email'),
+      password: data.get('password')
+    }, store);
   };
 
   return (
@@ -113,7 +125,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/register/" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
