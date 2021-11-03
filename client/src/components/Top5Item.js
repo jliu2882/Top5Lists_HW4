@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import { listItemTextClasses } from "@mui/material";
 /*
     This React component represents a single item in our
     Top 5 List, which can be edited or moved around.
@@ -48,15 +49,37 @@ function Top5Item(props) {
         store.addMoveItemTransaction(sourceId, targetId);
     }
 
+    function handleToggleEdit(event) {
+        event.stopPropagation();
+        toggleEdit();
+    }
+    function toggleEdit() {
+        let newActive = !editActive;
+        if (newActive) {
+            store.setIsItemEditActive();
+        }
+        setEditActive(newActive);
+    }
+    
+    function handleKeyPress(event) {
+        if (event.code === "Enter") {
+            console.log("hey");
+            handleBlur(event);
+        }
+    }
+    function handleBlur(event){
+        let id = ("" + event.target.id).substring('item-'.length);
+        store.addUpdateItemTransaction(id, props.text, event.target.value);
+        toggleEdit();
+    }
+
     let { index } = props;
 
     let itemClass = "top5-item";
     if (draggedTo) {
         itemClass = "top5-item-dragged-to";
     }
-
-    return (
-            <ListItem
+    let itemElement = <ListItem
                 id={'item-' + (index+1)}
                 key={props.key}
                 className={itemClass}
@@ -83,13 +106,27 @@ function Top5Item(props) {
                 }}
             >
             <Box sx={{ p: 1 }}>
-                <IconButton aria-label='edit'>
+                <IconButton aria-label='edit' onClick={handleToggleEdit}>
                     <EditIcon style={{fontSize:'48pt'}}  />
                 </IconButton>
             </Box>
                 <Box sx={{ p: 1, flexGrow: 1 }}>{props.text}</Box>
-            </ListItem>
-    )
+            </ListItem>;
+    if(editActive){
+        itemElement = 
+        <input
+            autoFocus
+            id={'item-' + (index + 1)}
+            className={itemClass}
+            type='text'
+            onKeyPress={handleKeyPress}
+            //onBlur={handleBlur}
+            defaultValue={props.text}
+        />;
+    }
+    return (
+        itemElement
+    );
 }
 
 export default Top5Item;

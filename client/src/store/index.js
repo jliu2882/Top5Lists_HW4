@@ -303,10 +303,16 @@ function GlobalStoreContextProvider(props) {
         tps.addTransaction(transaction);
     }
 
-    store.addUpdateItemTransaction = function (index, newText) {
-        let oldText = store.currentList.items[index];
-        let transaction = new UpdateItem_Transaction(store, index, oldText, newText);
-        tps.addTransaction(transaction);
+    store.addUpdateItemTransaction = function (index, oldText, newText) {
+        index-=1;
+        if(oldText!==newText){
+            let transaction = new UpdateItem_Transaction(store, index, oldText, newText);
+            tps.addTransaction(transaction);
+            console.log("12");
+        } else{
+            console.log("weeWOO");
+            store.updateCurrentList(); //update the foolproof design
+        }
     }
 
     store.moveItem = function (start, end) {
