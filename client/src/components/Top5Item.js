@@ -113,15 +113,23 @@ function Top5Item(props) {
                 <Box sx={{ p: 1, flexGrow: 1 }}>{props.text}</Box>
             </ListItem>;
     if(editActive){
-        itemElement = 
-        <input
-            autoFocus
+        itemElement =
+        <TextField
+            required
+            fullWidth
+            
+            label={"Item #" + (index + 1) + " Name"}
+            name="name"
+            autoComplete="Item Name"
+
             id={'item-' + (index + 1)}
             className={itemClass}
-            type='text'
             onKeyPress={handleKeyPress}
-            //onBlur={handleBlur}
+            onBlur={handleBlur}
             defaultValue={props.text}
+            inputProps={{style: {fontSize: 48}}}
+            InputLabelProps={{style: {fontSize: 24}}}
+            autoFocus
         />;
     }
     return (
