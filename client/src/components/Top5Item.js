@@ -117,11 +117,9 @@ function Top5Item(props) {
         <TextField
             required
             fullWidth
-            
             label={"Item #" + (index + 1) + " Name"}
             name="name"
             autoComplete={"Item #" + (index + 1) + " Name"}
-
             id={'item-' + (index + 1)}
             className={itemClass}
             onKeyPress={handleKeyPress}
