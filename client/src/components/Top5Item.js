@@ -80,7 +80,6 @@ function Top5Item(props) {
     }
     let itemElement = <ListItem
                 id={'item-' + (index+1)}
-                key={props.key}
                 className={itemClass}
                 onDragStart={(event) => {
                     handleDragStart(event, (index+1))

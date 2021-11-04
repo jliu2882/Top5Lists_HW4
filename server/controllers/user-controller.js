@@ -96,7 +96,6 @@ loginUser = async (req, res) => {
                 })
         } else {
             const match = await bcrypt.compare(password, existingUser.passwordHash);
-            //TODO CHECK THE PASSWORD BEFORE ACCEPTING THEM LMFAO
             if(!match){
                 return res
                     .status(400)
