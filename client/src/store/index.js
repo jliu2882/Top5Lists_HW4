@@ -277,6 +277,31 @@ function GlobalStoreContextProvider(props) {
             payload: null
         });
     }
+/*
+//TODO FINISH THIS
+store.hideDeleteListModal = function (){
+    var deleteModal = document.getElementById("delete-modal");
+    deleteModal.classList.remove("is-visible");
+    storeReducer({ //re-allow controls
+        type: GlobalStoreActionType.SET_CURRENT_LIST,
+        payload: store.currentList
+    });
+}
+store.showDeleteListModal = function (id){
+    async function asyncShowDeleteListModal(id){
+        const response = await api.getTop5ListById(id);
+        if(response.data.success){
+            var deleteModal = document.getElementById("delete-modal");
+            storeReducer({
+                type: GlobalStoreActionType.MARK_LIST_FOR_DELETION,
+                payload: response.data.top5List
+            });
+            deleteModal.classList.add("is-visible");
+        }
+    }
+    asyncShowDeleteListModal(id);
+}
+*/
 
     // THE FOLLOWING 8 FUNCTIONS ARE FOR COORDINATING THE UPDATING
     // OF A LIST, WHICH INCLUDES DEALING WITH THE TRANSACTION STACK. THE
@@ -308,9 +333,7 @@ function GlobalStoreContextProvider(props) {
         if(oldText!==newText){
             let transaction = new UpdateItem_Transaction(store, index, oldText, newText);
             tps.addTransaction(transaction);
-            console.log("12");
         } else{
-            console.log("weeWOO");
             store.updateCurrentList(); //update the foolproof design
         }
     }

@@ -76,7 +76,6 @@ function AuthContextProvider(props) {
         }
     }
     auth.loginUser = async function(userData, store) {
-        console.log("brh");  
         const response = await api.loginUser(userData);
         if (response.status === 200) {
             authReducer({

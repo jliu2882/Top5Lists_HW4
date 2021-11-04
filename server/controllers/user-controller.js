@@ -94,9 +94,19 @@ loginUser = async (req, res) => {
                     success: false,
                     errorMessage: "An account with this email address does not exists."
                 })
+        } else {
+            const match = await bcrypt.compare(password, existingUser.passwordHash);
+            //TODO CHECK THE PASSWORD BEFORE ACCEPTING THEM LMFAO
+            if(!match){
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        errorMessage: "Incorrect password"
+                    })
+            }
         }
 
-        //TODO CHECK THE PASSWORD BEFORE ACCEPTING THEM LMFAO
 
         // LOGIN THE USER
         const token = auth.signToken(existingUser);
