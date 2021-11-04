@@ -82,7 +82,7 @@ export default function AppBanner() {
     
     function getAccountMenu(loggedIn) {
         if(loggedIn){
-            return "hi"; //TODO get initials
+            return auth.user.firstName[0]+auth.user.lastName[0];
         } else{
             return <AccountCircle />;
         }

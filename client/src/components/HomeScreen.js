@@ -20,7 +20,14 @@ const HomeScreen = () => {
         store.createNewList();
     }
     let listCard = "";
+    function sortKeyNamePairsByName(keyNamePairs){
+        keyNamePairs.sort((keyPair1, keyPair2) => {
+            // GET THE LISTS
+            return keyPair1.name.localeCompare(keyPair2.name);
+        });
+    }
     if (store) {
+        sortKeyNamePairsByName(store.idNamePairs);
         listCard = 
             <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
             {
