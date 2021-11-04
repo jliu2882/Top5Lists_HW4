@@ -6,6 +6,8 @@ import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -14,14 +16,30 @@ import DeleteIcon from '@mui/icons-material/Delete';
     
     @author McKilla Gorilla
 */
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair } = props;
+    
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     function handleLoadList(event, id) {
-        if (!event.target.disabled) {
+        if (!event.target.disabled && !open) {
             // CHANGE THE CURRENT LIST
             store.setCurrentList(id);
         }
@@ -43,6 +61,7 @@ function ListCard(props) {
     async function handleDeleteList(event, id) {
         event.stopPropagation();
         store.markListForDeletion(id);
+        handleOpen();
         //show modal
     }
 
@@ -57,6 +76,7 @@ function ListCard(props) {
         setText(event.target.value);
     }
 
+    
     let cardElement =
         <ListItem
             id={idNamePair._id}
@@ -85,6 +105,24 @@ function ListCard(props) {
                         <DeleteIcon style={{fontSize:'48pt'}} />
                     </IconButton>
                 </Box>
+
+                <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal"
+                aria-describedby="modal"
+                autoFocus
+                >
+                <Box sx={style}>
+                <Typography id="modal" variant="h6" component="h2">
+                Text in a modal
+                </Typography>
+                <Typography id="modal" sx={{ mt: 2 }}>
+                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                </Typography>
+                </Box>
+                </Modal>
+
         </ListItem>
 
     if (editActive) {
