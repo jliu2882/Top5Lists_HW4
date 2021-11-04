@@ -134,3 +134,8 @@ module.exports = {
     loginUser
 }
 //TODO make a logout
+//TODO if user info wrong do 
+//modal
+//import Alert from '@mui/material/Alert';
+//<Alert severity="warning">This is a warning alert — check it out!</Alert>
+//https://mui.com/components/buttons/ to button to close modal

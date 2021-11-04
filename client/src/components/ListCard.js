@@ -8,6 +8,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -64,6 +66,11 @@ function ListCard(props) {
         handleOpen();
         //show modal
     }
+    async function deleteList(event, id) {
+        event.stopPropagation();
+        store.deleteMarkedList();
+        handleClose();
+    }
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
@@ -115,11 +122,10 @@ function ListCard(props) {
                 >
                 <Box sx={style}>
                 <Typography id="modal" variant="h6" component="h2">
-                Text in a modal
+                Delete Top 5 INSERTLISTNAMEHERELOL List?
                 </Typography>
-                <Typography id="modal" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
+                <Button variant="outlined" onClick={deleteList}>Confirm</Button>
+                <Button variant="outlined" onClick={handleClose}>Cancel</Button>
                 </Box>
                 </Modal>
 
