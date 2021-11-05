@@ -16,7 +16,8 @@ function Top5Item(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [draggedTo, setDraggedTo] = useState(0);
-
+    var counter = 0;
+    
     function handleDragStart(event, targetId) {
         event.dataTransfer.setData("item", targetId);
     }
@@ -27,18 +28,23 @@ function Top5Item(props) {
 
     function handleDragEnter(event) {
         event.preventDefault();
-        console.log("entering");
+        console.log("entering"+counter);
         setDraggedTo(true);
+        counter++;
     }
 
     function handleDragLeave(event) {
-        event.preventDefault();
-        console.log("leaving");
-        setDraggedTo(false);
+        if (counter === 0) { 
+            event.preventDefault();
+            console.log("leaving"+counter);
+            setDraggedTo(false);
+        }
+        counter--;
     }
 
     function handleDrop(event, targetId) {
         event.preventDefault();
+        counter=0;
         let sourceId = event.dataTransfer.getData("item");
         sourceId = sourceId.substring(sourceId.indexOf("-") + 1);
         setDraggedTo(false);
@@ -99,7 +105,7 @@ function Top5Item(props) {
                 draggable="true"
                 sx={{ display: 'flex', p: 1 }}
                 style={{
-                    fontSize: '48pt',
+                    fontSize: '48pt',   
                     width: '100%'
                 }}
             >

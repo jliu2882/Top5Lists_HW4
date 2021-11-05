@@ -74,18 +74,20 @@ function AuthContextProvider(props) {
     }
 
     auth.registerUser = async function(userData, store) {
-        const response = await api.registerUser(userData);      
-        if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.REGISTER_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-            history.push("/");
-            store.loadIdNamePairs();
-        } else{
-            console.log(response.data.errorMessage);
+        try{
+            const response = await api.registerUser(userData);      
+            if (response.status === 200) {
+                authReducer({
+                    type: AuthActionType.REGISTER_USER,
+                    payload: {
+                        user: response.data.user
+                    }
+                })
+                history.push("/");
+                store.loadIdNamePairs();
+            }
+        }catch(err){
+            console.log(err.response.data.errorMessage);
             //TODO if user info wrong do 
             /*
 import Modal from '@mui/material/Modal';
@@ -97,18 +99,20 @@ import Button from '@mui/material/Button';
 
     
     auth.loginUser = async function(userData, store) {
-        const response = await api.loginUser(userData);
-        if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.LOGIN_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-            history.push("/");
-            store.loadIdNamePairs();
-        } else{
-            console.log(response.data.errorMessage);
+        try{
+            const response = await api.loginUser(userData);
+            if (response.status === 200) {
+                authReducer({
+                    type: AuthActionType.LOGIN_USER,
+                    payload: {
+                        user: response.data.user
+                    }
+                })
+                history.push("/");
+                store.loadIdNamePairs();
+            }
+        }catch(err){
+            console.log(err.response.data.errorMessage);
             //TODO if user info wrong do 
             /*
 import Modal from '@mui/material/Modal';
@@ -116,7 +120,6 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
             */
         }
-
     }
 
     auth.logoutUser = async function(){
@@ -130,7 +133,7 @@ import Button from '@mui/material/Button';
             }
         }
         catch(e){
-            console.log(e);
+            console.log(e.response.data.errorMessage);
         }
     }
 

@@ -17,23 +17,23 @@ getLoggedIn = async (req, res) => {
 }
 
 registerUser = async (req, res) => {
-    try { //Return error code 201 so we can read the error; i dont know why 400+ doesn't read
+    try {
         const { firstName, lastName, email, password, passwordVerify } = req.body;
         if (!firstName || !lastName || !email || !password || !passwordVerify) {
             return res
-                .status(201)
+                .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
         }
         if (password.length < 8) {
             return res
-                .status(201)
+                .status(400)
                 .json({
                     errorMessage: "Please enter a password of at least 8 characters."
                 });
         }
         if (password !== passwordVerify) {
             return res
-                .status(201)
+                .status(400)
                 .json({
                     errorMessage: "Please enter the same password twice."
                 })
@@ -41,7 +41,7 @@ registerUser = async (req, res) => {
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
             return res
-                .status(201)
+                .status(400)
                 .json({
                     success: false,
                     errorMessage: "An account with this email address already exists."
@@ -83,13 +83,13 @@ loginUser = async (req, res) => {
         const { email, password } = req.body;
         if (!email || !password) {
             return res
-                .status(201)
+                .status(400)
                 .json({ errorMessage: "Please enter all required fields." });
         }
         const existingUser = await User.findOne({ email: email });
         if (!existingUser) {
             return res
-                .status(201)
+                .status(400)
                 .json({
                     success: false,
                     errorMessage: "An account with this email address does not exists."
@@ -98,7 +98,7 @@ loginUser = async (req, res) => {
             const match = await bcrypt.compare(password, existingUser.passwordHash);
             if(!match){
                 return res
-                    .status(201)
+                    .status(400)
                     .json({
                         success: false,
                         errorMessage: "Incorrect password"
