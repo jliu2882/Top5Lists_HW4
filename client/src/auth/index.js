@@ -7,7 +7,7 @@ console.log("create AuthContext: " + AuthContext);
 
 // THESE ARE ALL THE TYPES OF UPDATES TO OUR AUTH STATE THAT CAN BE PROCESSED
 export const AuthActionType = {
-    GET_LOGGED_IN: "GET_LOGGED_IN", //apprenrlyt its set idk also try catch TODO also read discord casue wth
+    GET_LOGGED_IN: "GET_LOGGED_IN",
     REGISTER_USER: "REGISTER_USER",
     LOGIN_USER: "LOGIN_USER",
     LOGOUT_USER: "LOGOUT_USER"
@@ -57,15 +57,19 @@ function AuthContextProvider(props) {
     }
 
     auth.getLoggedIn = async function () {
-        const response = await api.getLoggedIn();
-        if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.SET_LOGGED_IN,
-                payload: {
-                    loggedIn: response.data.loggedIn,
-                    user: response.data.user
-                }
-            });
+        try {
+            const response = await api.getLoggedIn();
+            if (response.status === 200) {
+                authReducer({
+                    type: AuthActionType.SET_LOGGED_IN,
+                    payload: {
+                        loggedIn: response.data.loggedIn,
+                        user: response.data.user
+                    }
+                });
+            } //no other status
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -80,8 +84,18 @@ function AuthContextProvider(props) {
             })
             history.push("/");
             store.loadIdNamePairs();
+        } else{
+            console.log(response.data.errorMessage);
+            //TODO if user info wrong do 
+            /*
+import Modal from '@mui/material/Modal';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+            */
         }
     }
+
+    
     auth.loginUser = async function(userData, store) {
         const response = await api.loginUser(userData);
         if (response.status === 200) {
@@ -94,14 +108,14 @@ function AuthContextProvider(props) {
             history.push("/");
             store.loadIdNamePairs();
         } else{
-            const response = await api.loginUser(userData);
             console.log(response.data.errorMessage);
+            //TODO if user info wrong do 
+            /*
+import Modal from '@mui/material/Modal';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+            */
         }
-        //TODO if user info wrong do 
-        //modal
-        //import Alert from '@mui/material/Alert';
-        //<Alert severity="warning">This is a warning alert — check it out!</Alert>
-        //https://mui.com/components/buttons/ to button to close modal
 
     }
 
