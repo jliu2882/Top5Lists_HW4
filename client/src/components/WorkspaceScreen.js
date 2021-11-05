@@ -3,6 +3,7 @@ import Top5Item from './Top5Item.js'
 import List from '@mui/material/List';
 import { Typography } from '@mui/material'
 import { GlobalStoreContext } from '../store/index.js'
+import React, { useEffect } from 'react';
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -11,6 +12,18 @@ import { GlobalStoreContext } from '../store/index.js'
 */
 function WorkspaceScreen() {
     const { store } = useContext(GlobalStoreContext);
+    /* TODO 
+    save user login past refresh
+    only allow proper email in; jwt is meme for real security and im not real secure :)
+
+    useEffect(() => {
+        if(store.currentList===null){
+            let id = window.location.pathname;
+            id = ("" + id).substring('/top5list/'.length);
+            store.setCurrentList(id);
+        }
+    });
+    */
 
     let editItems = "";
     if (store.currentList) {

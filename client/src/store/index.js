@@ -208,10 +208,11 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
+        let email = ""+auth.user.email;
         let payload = {
             name: newListName,
             items: ["?", "?", "?", "?", "?"],
-            ownerEmail: auth.user.email
+            ownerEmail: email
         };
         const response = await api.createTop5List(payload);
         if (response.data.success) {
@@ -244,6 +245,10 @@ function GlobalStoreContextProvider(props) {
         else {
             console.log("API FAILED TO GET THE LIST PAIRS");
         }
+    }
+
+    store.filterNamePairs = function(email){
+        return store.idNamePairs.filter((pair) => pair.ownerEmail === email);
     }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
