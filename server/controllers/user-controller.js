@@ -79,17 +79,17 @@ registerUser = async (req, res) => {
 }
 
 loginUser = async (req, res) => {
-    try {
+    try { //Return error code 201 so we can read the error; i dont know why 400+ doesn't read
         const { email, password } = req.body;
         if (!email || !password) {
             return res
-                .status(400)
+                .status(201)
                 .json({ errorMessage: "Please enter all required fields." });
         }
         const existingUser = await User.findOne({ email: email });
         if (!existingUser) {
             return res
-                .status(400)
+                .status(201)
                 .json({
                     success: false,
                     errorMessage: "An account with this email address does not exists."
@@ -98,7 +98,7 @@ loginUser = async (req, res) => {
             const match = await bcrypt.compare(password, existingUser.passwordHash);
             if(!match){
                 return res
-                    .status(400)
+                    .status(201)
                     .json({
                         success: false,
                         errorMessage: "Incorrect password"
@@ -128,14 +128,29 @@ loginUser = async (req, res) => {
     }
 }
 
+logoutUser = async (req, res) => {
+    try {
+        //find user
+        //get cookie or smtjh
+        //expire it
+        //TODO
+        return res
+            .status(200)
+            .json({
+                success: true,
+                errorMessage: "Incorrect password"
+            })
+    } catch (err) {
+        console.error(err);
+        res.status(500).send();
+    }
+
+
+}
+
 module.exports = {
     getLoggedIn,
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 }
-//TODO make a logout
-//TODO if user info wrong do 
-//modal
-//import Alert from '@mui/material/Alert';
-//<Alert severity="warning">This is a warning alert — check it out!</Alert>
-//https://mui.com/components/buttons/ to button to close modal

@@ -54,10 +54,10 @@ function ListCard(props) {
 
     function toggleEdit() {
         let newActive = !editActive;
+        setEditActive(newActive);
         if (newActive) {
             store.setIsListNameEditActive();
         }
-        setEditActive(newActive);
     }
 
     async function handleDeleteList(event, id) {
@@ -122,7 +122,7 @@ function ListCard(props) {
                 >
                 <Box sx={style}>
                 <Typography id="modal" variant="h6" component="h2">
-                Delete Top 5 INSERTLISTNAMEHERELOL List?
+                Delete Top 5 {idNamePair.name} List?
                 </Typography>
                 <Button variant="outlined" onClick={deleteList}>Confirm</Button>
                 <Button variant="outlined" onClick={handleClose}>Cancel</Button>
