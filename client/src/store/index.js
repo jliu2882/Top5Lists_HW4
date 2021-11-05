@@ -164,6 +164,9 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION PROCESSES CHANGING A LIST NAME
     store.changeListName = async function (id, newName) {
+        if(newName===""){
+            newName=" ";
+        }
         let response = await api.getTop5ListById(id);
         if (response.data.success) {
             let top5List = response.data.top5List;
