@@ -4,6 +4,7 @@ import List from '@mui/material/List';
 import { Typography } from '@mui/material'
 import { GlobalStoreContext } from '../store/index.js'
 import React, { useEffect } from 'react';
+import AuthContext from '../auth';
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -11,6 +12,7 @@ import React, { useEffect } from 'react';
     @author McKilla Gorilla
 */
 function WorkspaceScreen() {
+    const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
     /* TODO 
     save user login past refresh
