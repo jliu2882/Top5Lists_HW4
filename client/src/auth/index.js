@@ -87,13 +87,7 @@ function AuthContextProvider(props) {
                 store.loadIdNamePairs();
             }
         }catch(err){
-            console.log(err.response.data.errorMessage);
-            //TODO if user info wrong do 
-            /*
-import Modal from '@mui/material/Modal';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-            */
+            store.setModalMessage(err.response.data.errorMessage);
         }
     }
 
@@ -112,13 +106,7 @@ import Button from '@mui/material/Button';
                 store.loadIdNamePairs();
             }
         }catch(err){
-            console.log(err.response.data.errorMessage);
-            //TODO if user info wrong do 
-            /*
-import Modal from '@mui/material/Modal';
-import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-            */
+            store.setModalMessage(err.response.data.errorMessage);
         }
     }
 

@@ -1,4 +1,5 @@
 import AppBanner from './AppBanner'
+import AccountModal from './AccountModal'
 import EditToolbar from './EditToolbar'
 import HomeScreen from './HomeScreen'
 import HomeWrapper from './HomeWrapper'
@@ -17,6 +18,7 @@ import WorkspaceScreen from './WorkspaceScreen'
 */
 export { 
     AppBanner, 
+    AccountModal,
     EditToolbar, 
     HomeScreen,
     HomeWrapper,
