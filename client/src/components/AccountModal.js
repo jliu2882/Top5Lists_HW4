@@ -34,7 +34,7 @@ aria-describedby="modal-modal-description"
 >
 <Box sx={style}>
 <Alert severity="warning">{store.modalMessage}</Alert>
-<Button variant="outlined" onClick={handleClose}>I understand</Button>
+<Button variant="outlined" onClick={handleClose}g>I understand</Button>
 </Box>
 </Modal>
 
